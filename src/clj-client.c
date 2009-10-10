@@ -309,7 +309,8 @@ int main(int argc, char *argv[])
 	send_auth_file(sockfd);
 
 	// Send PWD
-	cwd = get_current_dir_name();
+	cwd = (char *)malloc(sizeof(char)*1024);
+	getcwd(cwd,sizeof(char)*1024);
 	send_int(sockfd, strlen(cwd));
 	send(sockfd, cwd, strlen(cwd), 0);
 	free(cwd);

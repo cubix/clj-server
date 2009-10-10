@@ -15,7 +15,7 @@
   (:import (clojure.lang Compiler Compiler$CompilerException)
 		   (clojure_server ExitException))
   (:use clojure.main)
-  (:require clojure.stacktrace))
+  (:require clojure.contrib.stacktrace))
 
 (def *gensym-ns* true)
 
@@ -85,7 +85,7 @@ prepend user.dir to it, and return the result"
 					(binding [*out* *err*]
 					  (do
 						(if (instance? Compiler$CompilerException e)
-						(println (clojure.stacktrace/root-cause e))
+						(println (clojure.contrib.stacktrace/root-cause e))
 						(println e)))
 					  (.flush *err*)))))
   (prn))
@@ -167,8 +167,8 @@ prepend user.dir to it, and return the result"
 					   (instance? ExitException (.getCause e)))
 				  (instance? ExitException e))
 		 (binding [*out* *err*]
-		   (clojure.stacktrace/print-stack-trace
-			(clojure.stacktrace/root-cause e))
+		   (clojure.contrib.stacktrace/print-stack-trace
+			(clojure.contrib.stacktrace/root-cause e))
 		   (flush)
 		   (.write *exit* 1)
 		   (.flush *exit*))
